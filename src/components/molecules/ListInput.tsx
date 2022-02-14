@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
+import useList from '../../states/useList'
 
 const ListInput = () => {
 
   const [listInput, seListInput] = useState('')
+  const { createList}  = useList((state) => state)
 
   return (
     <div>
@@ -18,6 +20,7 @@ const ListInput = () => {
       <button
         className="px-3 py-1.5 ml-5 bg-blue-500 text-white" 
         onClick={() => {
+          createList(listInput)
           seListInput('')
         }}
       >Create Input</button>
