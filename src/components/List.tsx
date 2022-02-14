@@ -22,7 +22,7 @@ const List = () => {
                 >{list.title}</h5>
               </div>
               {list.cards.map((card) => (
-                <Card key={card.cardId} cardId={card.cardId} />
+                <Card key={card.cardId} cardId={card.cardId} listId={list.id} />
               ))}
               <CardInput
                 listId={list.id} 
