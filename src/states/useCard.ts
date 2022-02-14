@@ -10,21 +10,27 @@ export interface Card {
 
 const useCard = create<{
   cards: Card[],
-  createCard: (title: string) => void
+  createCard: (title: string) => Card,
+  findCardById: (id: string) => Card
 }>((set, get) => ({
   cards: [],
   createCard: (title: string) => {
+    const newCard: Card = {
+      id: uuidv4(),
+      title,
+      todos: [],
+      description: ''
+    }
     set((state) => ({
       cards: [
         ...state.cards,
-        {
-          id: uuidv4(),
-          title,
-          todos: [],
-          description: ''
-        }
+        newCard
       ]
     }))
+    return newCard
+  },
+  findCardById: (id: string) => {
+    return get().cards.filter((card) => card.id === id)[0]
   }
 }))
 
