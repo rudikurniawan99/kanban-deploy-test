@@ -18,7 +18,7 @@ const List = () => {
             <div className="w-64 p-3 bg-gray-100 rounded-sm text-gray-800">
               <div className="">
                 <h5
-                  className="font-medium"
+                  className="font-medium mb-3"
                 >{list.title}</h5>
               </div>
               {list.cards.map((card) => (

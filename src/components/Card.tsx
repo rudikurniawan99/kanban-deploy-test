@@ -8,7 +8,7 @@ const Card = ({ cardId } : { cardId: string }) => {
 
   return (
     <div className="bg-white p-2 mb-2">
-      <p>title : {card.title}</p>
+      <p className="">{card.title}</p>
     </div>
   )
 }

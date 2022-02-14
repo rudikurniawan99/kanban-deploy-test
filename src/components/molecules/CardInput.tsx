@@ -10,12 +10,23 @@ const CardInput = ({ listId } : { listId: string }) => {
   const { createCard } = useCard((state) => state)
   const { addCardToList } = useList((state) => state)
 
+  const cardButtonSubmitHandler = () => {
+    if(!cardInput) {
+      setIsOpen(false)
+    }else{
+      setIsOpen(false)
+      const { id } = createCard(cardInput)
+      addCardToList(listId, id)
+      setCardInput('')
+    }
+  }
+
   return (
     <div className="mt-3">
       {isOpen ? (
         <div className="">
           <input 
-            className="bg-white px-2 py-2 w-full"
+            className="bg-gray-600 text-gray-200 px-2 py-2 w-full"
             type="text" placeholder="card title" 
             value={cardInput || ''}
             onChange={(e) => {
@@ -24,13 +35,7 @@ const CardInput = ({ listId } : { listId: string }) => {
           />
           <button
             className="mt-2 bg-blue-500 text-white px-2 py-1" 
-            onClick={() => {
-              if(!cardInput) setIsOpen(false)
-              setIsOpen(false)
-              const { id } = createCard(cardInput)
-              addCardToList(listId, id)
-              setCardInput('')
-            }}
+            onClick={cardButtonSubmitHandler}
           >Add</button>
         </div>
       ): (
