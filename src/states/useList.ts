@@ -1,5 +1,6 @@
 import create from "zustand";
 import { v4 as uuidv4 } from 'uuid'
+import { listeners } from "process";
 
 export interface List {
   id: string
@@ -10,7 +11,8 @@ export interface List {
 const useList = create<{
   lists: List[],
   createList: (title: string) => void,
-  addCardToList: (listId: string, cardId: string) => void
+  addCardToList: (listId: string, cardId: string) => void,
+  removeCardFromList: (listId: string, cardId: string) => void
 }>((set, get) => ({
   lists: [],
   createList: (title: string) => {
@@ -42,6 +44,23 @@ const useList = create<{
     }
     
     lists.splice(listIndex, 1, newList)
+    set((state) => ({
+      ...state
+    }))
+  },
+  removeCardFromList: (listId: string, cardId: string) => {
+    const listIndex = findIndexOfList(listId, get().lists)
+    let list = findListById(listId, get().lists)
+    let cards = get().lists[listIndex].cards.filter((card) => card.cardId !== cardId)
+    const lists = get().lists
+
+    const newList: List = {
+      id: list.id,
+      title: list.title,
+      cards
+    }
+
+    lists.splice(listIndex, 1, newList) 
     set((state) => ({
       ...state
     }))

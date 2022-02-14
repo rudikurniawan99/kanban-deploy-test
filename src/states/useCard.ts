@@ -11,7 +11,8 @@ export interface Card {
 const useCard = create<{
   cards: Card[],
   createCard: (title: string) => Card,
-  findCardById: (id: string) => Card
+  findCardById: (id: string) => Card,
+  deleteCardById: (id: string) => void
 }>((set, get) => ({
   cards: [],
   createCard: (title: string) => {
@@ -31,6 +32,12 @@ const useCard = create<{
   },
   findCardById: (id: string) => {
     return get().cards.filter((card) => card.id === id)[0]
+  },
+  deleteCardById: (id: string) => {
+    set((state) => ({
+      ...state,
+      cards: get().cards.filter((card) => card.id !== id) 
+    }))
   }
 }))
 
