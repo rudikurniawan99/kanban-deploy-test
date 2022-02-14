@@ -1,9 +1,10 @@
 import React from 'react'
+import ListInput from './components/molecules/ListInput'
 
 const App = () => {
   return (
-    <div>
-      <h1>Test</h1>
+    <div className="px-12 pt-10">
+      <ListInput/>
     </div>
   )
 }
