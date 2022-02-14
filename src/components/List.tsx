@@ -10,10 +10,14 @@ const List = () => {
       <div className="mt-10 flex space-x-5">
         {lists.map((list) => (
           <div 
-            className="w-64"
+            className=""
             key={list.id}
           >
-            {list.title}
+            <div className="w-64 p-3 bg-gray-100 rounded-sm text-gray-800">
+              <h5
+                className="font-medium" 
+              >{list.title}</h5>
+            </div>
           </div>
         ))}
       </div>
