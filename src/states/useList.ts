@@ -1,4 +1,4 @@
-import create from "zustand/react";
+import create from "zustand";
 import { v4 as uuidv4 } from 'uuid'
 
 export interface List {
@@ -8,18 +8,19 @@ export interface List {
 }
 
 const useList = create<{
-  lists: List[]
+  lists: List[],
+  createList: (title: string) => void
 }>((set, get) => ({
   lists: [],
   createList: (title: string) => {
-    set((state)=>({
+    set(state => ({
       ...state,
       lists: [
         ...state.lists,
         {
           id: uuidv4(),
           title,
-          cards: [] 
+          cards: []
         }
       ]
     }))
