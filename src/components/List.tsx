@@ -1,7 +1,6 @@
 import React from 'react'
 import useList from '../states/useList'
-import Card from './Card'
-import CardInput from './molecules/CardInput'
+import ListItem from './ListItem'
 
 const List = () => {
 
@@ -15,19 +14,9 @@ const List = () => {
             className=""
             key={list.id}
           >
-            <div className="w-64 p-3 bg-gray-100 rounded-sm text-gray-800">
-              <div className="">
-                <h5
-                  className="font-medium mb-3"
-                >{list.title}</h5>
-              </div>
-              {list.cards.map((card) => (
-                <Card key={card.cardId} cardId={card.cardId} listId={list.id} />
-              ))}
-              <CardInput
-                listId={list.id} 
-              />
-            </div>
+            <ListItem
+              list={list} 
+            />
           </div>
         ))}
       </div>
