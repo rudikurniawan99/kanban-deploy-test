@@ -1,6 +1,5 @@
 import create from "zustand";
 import { v4 as uuidv4 } from 'uuid'
-import { listeners } from "process";
 
 export interface List {
   id: string
@@ -14,7 +13,18 @@ const useList = create<{
   addCardToList: (listId: string, cardId: string) => void,
   removeCardFromList: (listId: string, cardId: string) => void
 }>((set, get) => ({
-  lists: [],
+  lists: [
+    {
+      id: uuidv4(),
+      title: 'List 1',
+      cards: []
+    },
+    {
+      id: uuidv4(),
+      title: 'List 2',
+      cards: []
+    }
+  ],
   createList: (title: string) => {
     set(state => ({
       ...state,
