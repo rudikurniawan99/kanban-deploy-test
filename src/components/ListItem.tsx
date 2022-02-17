@@ -1,10 +1,19 @@
-import React from 'react'
-import { DragSourceMonitor, useDrag } from 'react-dnd'
+import React, { useRef } from 'react'
+import { DragSourceMonitor, DropTargetMonitor, useDrag, useDrop } from 'react-dnd'
 import { List } from '../states/useList'
 import Card from './Card'
 import CardInput from './molecules/CardInput'
 
 const ListItem = ({ list }: { list: List }) => {
+
+  const reff = useRef<HTMLDivElement>(null)
+
+  const [, drop] = useDrop(({
+    accept: 'List',
+    drop: (item: { id: string }) => {
+      console.log(item.id);
+    }
+  }))
 
   const [{ isDragging } ,drag] = useDrag(({
     type: 'List',
@@ -16,11 +25,13 @@ const ListItem = ({ list }: { list: List }) => {
     })
   }))
 
+  drag(drop(reff))
+
   return (
     <div>
       <div 
         className={`w-64 p-3  rounded-sm text-gray-800 ${isDragging ? 'bg-gray-300': 'bg-gray-100'}`}
-        ref={drag}
+        ref={reff}
       >
         <div className="">
           <h5

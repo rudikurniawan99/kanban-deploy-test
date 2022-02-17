@@ -6,16 +6,6 @@ import ListItem from './ListItem'
 const List = () => {
 
   const { lists } = useList((state) => state)
-  const [{ canDrop }, drop] = useDrop(({
-    accept: 'List',
-    drop: (item) => {
-      console.log(item);
-       
-    },
-    collect: (monitor) => ({
-      canDrop: monitor.canDrop()
-    })
-  }))
 
   return (
     <div>
@@ -23,15 +13,12 @@ const List = () => {
         {lists.map((list) => (
           <div 
             className=""
-            ref={drop}
             key={list.id}
           >
             <ListItem
               list={list} 
             />
-            {
-              canDrop && <p className="text-sm">You can drop it here</p>
-            } 
+             
           </div>
         ))}
       </div>
