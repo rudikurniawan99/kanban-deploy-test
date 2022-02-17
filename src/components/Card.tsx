@@ -1,15 +1,17 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import useCard from '../states/useCard'
 import useList from '../states/useList'
 
-const Card = ({ cardId, listId } : { cardId: string, listId: string }) => {
+const Card = ({ cardId, listId, index } : { cardId: string, listId: string, index: number }) => {
 
   const { findCardById, deleteCardById } = useCard((state) => state)
   const card = findCardById(cardId)
   const { removeCardFromList } = useList((state) => state)
 
   return (
-    <div className="bg-white p-2 mb-2 flex justify-between">
+    <div 
+      className={` p-2 mb-2 flex justify-between bg-white`}
+    >
       <p className="">{card.title}</p>
       <button
         className="w-5 text-red-600 hover:text-red-700" 

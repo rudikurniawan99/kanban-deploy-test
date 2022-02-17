@@ -1,5 +1,4 @@
 import React from 'react'
-import { useDrop } from 'react-dnd'
 import useList from '../states/useList'
 import ListItem from './ListItem'
 
