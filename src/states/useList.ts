@@ -11,17 +11,23 @@ const useList = create<{
   lists: List[],
   createList: (title: string) => void,
   addCardToList: (listId: string, cardId: string) => void,
-  removeCardFromList: (listId: string, cardId: string) => void
+  removeCardFromList: (listId: string, cardId: string) => void,
+  moveCard: (sourceIndex: number, destinationIndex: number) => void
 }>((set, get) => ({
   lists: [
     {
-      id: uuidv4(),
+      id: '1',
       title: 'List 1',
       cards: []
     },
     {
-      id: uuidv4(),
+      id: '2',
       title: 'List 2',
+      cards: []
+    },
+    {
+      id: '3',
+      title: 'List 3',
       cards: []
     }
   ],
@@ -71,6 +77,14 @@ const useList = create<{
     }
 
     lists.splice(listIndex, 1, newList) 
+    set((state) => ({
+      ...state
+    }))
+  },
+  moveCard: (sourceIndex: number, destinationIndex: number) => {
+    let lists = get().lists
+    const list = lists.splice(sourceIndex, 1)[0]
+    lists.splice(destinationIndex, 0, list)
     set((state) => ({
       ...state
     }))

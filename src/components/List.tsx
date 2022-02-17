@@ -10,13 +10,14 @@ const List = () => {
   return (
     <div>
       <div className="mt-10 flex space-x-5">
-        {lists.map((list) => (
+        {lists.map((list, index) => (
           <div 
             className=""
             key={list.id}
           >
             <ListItem
               list={list} 
+              index={index}
             />
              
           </div>

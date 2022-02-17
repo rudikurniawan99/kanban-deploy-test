@@ -1,24 +1,34 @@
 import React, { useRef } from 'react'
 import { DragSourceMonitor, DropTargetMonitor, useDrag, useDrop } from 'react-dnd'
-import { List } from '../states/useList'
+import useList, { List } from '../states/useList'
 import Card from './Card'
 import CardInput from './molecules/CardInput'
 
-const ListItem = ({ list }: { list: List }) => {
+const ListItem = ({ list, index }: { list: List, index: number }) => {
 
   const reff = useRef<HTMLDivElement>(null)
+  const { moveCard }  = useList((state) => state)
 
-  const [, drop] = useDrop(({
+  interface DragItem {
+    id: string
+    index: number
+  }
+
+  const [{ canDrop } , drop] = useDrop(({
     accept: 'List',
-    drop: (item: { id: string }) => {
-      console.log(item.id);
-    }
+    drop: (item: DragItem) => {
+      moveCard(item.index, index) 
+    },
+    collect: (monitor) => ({
+      canDrop: monitor.canDrop()
+    })
   }))
 
   const [{ isDragging } ,drag] = useDrag(({
     type: 'List',
     item: {
-      id: list.id
+      id: list.id,
+      index
     },
     collect: (monitor: DragSourceMonitor) => ({
       isDragging: monitor.isDragging(),
