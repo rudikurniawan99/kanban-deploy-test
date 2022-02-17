@@ -12,7 +12,7 @@ const useList = create<{
   createList: (title: string) => void,
   addCardToList: (listId: string, cardId: string) => void,
   removeCardFromList: (listId: string, cardId: string) => void,
-  moveCard: (sourceIndex: number, destinationIndex: number) => void
+  moveListPosition: (sourceIndex: number, destinationIndex: number) => void
 }>((set, get) => ({
   lists: [
     {
@@ -81,7 +81,7 @@ const useList = create<{
       ...state
     }))
   },
-  moveCard: (sourceIndex: number, destinationIndex: number) => {
+  moveListPosition: (sourceIndex: number, destinationIndex: number) => {
     let lists = get().lists
     const list = lists.splice(sourceIndex, 1)[0]
     lists.splice(destinationIndex, 0, list)

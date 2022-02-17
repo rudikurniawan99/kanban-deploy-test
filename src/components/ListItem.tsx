@@ -1,15 +1,22 @@
-import useList, { List } from '../states/useList'
+import { Draggable } from 'react-beautiful-dnd'
+import { List } from '../states/useList'
 import Card from './Card'
 import CardInput from './molecules/CardInput'
 
 const ListItem = ({ list, index }: { list: List, index: number }) => {
 
-  const { moveCard }  = useList((state) => state)
-
     return (
-    <div>
+    <Draggable
+      draggableId={list.id}
+      index={index}
+    >
+      {(provided) => (
+
       <div 
         className={`w-64 p-3  rounded-sm text-gray-800 bg-gray-100`}
+        ref={provided.innerRef}
+        {...provided.draggableProps}
+        {...provided.dragHandleProps}
       >
         <div className="">
           <h5
@@ -28,7 +35,9 @@ const ListItem = ({ list, index }: { list: List, index: number }) => {
           listId={list.id} 
         />
       </div>
-    </div>
+
+      )}
+    </Draggable>
   )
 }
 
