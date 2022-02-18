@@ -1,4 +1,4 @@
-import { Draggable } from 'react-beautiful-dnd'
+import { Draggable, Droppable } from 'react-beautiful-dnd'
 import { List } from '../states/useList'
 import Card from './Card'
 import CardInput from './molecules/CardInput'
@@ -18,19 +18,34 @@ const ListItem = ({ list, index }: { list: List, index: number }) => {
         {...provided.draggableProps}
         {...provided.dragHandleProps}
       >
-        <div className="">
-          <h5
-            className="font-medium mb-3"
-          >{list.title}</h5>
-        </div>
-        {list.cards.map((card, index) => (
-          <Card 
-            key={card.cardId}
-            cardId={card.cardId} 
-            listId={list.id}
-            index={index}
-          />
-        ))}
+        <Droppable
+          droppableId={list.id} 
+          type="Card"
+        >
+          {(provided) => (
+            <div 
+              className="py-0.5"
+              ref={provided.innerRef}   
+              {...provided.droppableProps}
+            >
+              <h5
+                className="font-medium mb-3"
+              >{list.title}</h5>
+              {list.cards.map((card, index) => (
+                <Card 
+                  key={card.cardId}
+                  cardId={card.cardId} 
+                  listId={list.id}
+                  index={index}
+                />
+              ))}
+              {provided.placeholder}
+            </div>
+          )}
+
+        
+
+        </Droppable>
         <CardInput
           listId={list.id} 
         />

@@ -6,17 +6,19 @@ import useList from './states/useList'
 
 const App = () => {
 
-  const { moveListPosition } = useList((state) => state)
+  const { moveListPosition, moveCardPosition } = useList((state) => state)
 
   return (
     <div className="px-12 pt-10">
       <DragDropContext
         onDragEnd={({ source, destination }) => {
-          if(destination?.index !== null ){
+          if(source.droppableId === 'lists' && destination?.index !== null ){
             moveListPosition(source.index, destination?.index as number)
           }
-          console.log(source, destination);
-          
+          else{
+            if(destination)
+            moveCardPosition(source, destination)
+          }
         }} 
       > 
         <ListInput/>

@@ -7,12 +7,18 @@ export interface List {
   cards: { cardId: string }[]
 }
 
+interface DraggableProps{
+  droppableId: string
+  index: number
+}
+
 const useList = create<{
   lists: List[],
   createList: (title: string) => void,
   addCardToList: (listId: string, cardId: string) => void,
   removeCardFromList: (listId: string, cardId: string) => void,
-  moveListPosition: (sourceIndex: number, destinationIndex: number) => void
+  moveListPosition: (sourceIndex: number, destinationIndex: number) => void,
+  moveCardPosition: (source: DraggableProps, destination: DraggableProps ) => void
 }>((set, get) => ({
   lists: [
     {
@@ -83,11 +89,24 @@ const useList = create<{
   },
   moveListPosition: (sourceIndex: number, destinationIndex: number) => {
     let lists = get().lists
-    const list = lists.splice(sourceIndex, 1)[0]
-    lists.splice(destinationIndex, 0, list)
+    movePosition(sourceIndex, destinationIndex, lists)
+
     set((state) => ({
       ...state
     }))
+  },
+  moveCardPosition: (source: DraggableProps, destination: DraggableProps ) => {
+    if(source.droppableId === destination.droppableId && source.index !== destination.index){
+      let cards = findListById(source.droppableId, get().lists).cards
+      movePosition(source.index, destination.index, cards)
+    }else if(source.droppableId !== destination.droppableId){
+      let lists = get().lists
+
+      const sourceCards = findListById(source.droppableId, lists).cards
+      const destinationCards = findListById(destination.droppableId, lists).cards
+      const card = sourceCards.splice(source.index, 1)[0]
+      destinationCards.splice(destination.index, 0, card)
+    }
   }
 }))
 
@@ -99,4 +118,9 @@ const findIndexOfList = (id: string, arrList: List[]) => {
 
 const findListById = (id: string, arrList: List[]) => {
   return arrList.filter((list) => list.id === id)[0]
+}
+
+const movePosition = <T>(sourceIdx: number, destIdx: number, arr: T[]) => {
+  const item = arr.splice(sourceIdx, 1)[0]
+  arr.splice(destIdx, 0, item)
 }

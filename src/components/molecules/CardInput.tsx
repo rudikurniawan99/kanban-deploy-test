@@ -29,9 +29,18 @@ const CardInput = ({ listId } : { listId: string }) => {
             className="bg-gray-600 text-gray-200 px-2 py-2 w-full"
             type="text" placeholder="card title" 
             value={cardInput || ''}
+            autoFocus={true}
             onChange={(e) => {
               setCardInput(e.target.value)
             }}
+            onKeyDown={(e) => {
+              if(e.key === 'Escape'){
+                setIsOpen(false)
+              }else if(e.key === 'Enter'){
+                cardButtonSubmitHandler()
+              }
+            }}
+            
           />
           <button
             className="mt-2 bg-blue-500 text-white px-2 py-1" 
