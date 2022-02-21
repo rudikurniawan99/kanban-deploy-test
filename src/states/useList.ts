@@ -1,6 +1,5 @@
 import create from "zustand";
 import { v4 as uuidv4 } from 'uuid'
-import useCard, { Card } from "./useCard";
 
 export interface List {
   id: string
@@ -26,17 +25,12 @@ const useList = create<{
   lists: [
     {
       id: '1',
-      title: 'List 1',
+      title: 'Todo',
       cards: []
     },
     {
       id: '2',
-      title: 'List 2',
-      cards: []
-    },
-    {
-      id: '3',
-      title: 'List 3',
+      title: 'Doing',
       cards: []
     }
   ],
