@@ -38,35 +38,6 @@ const List = () => {
     </Droppable>
   )
 
-  // return (
-  //   <div className="mt-10 flex space-x-5">
-  //     {lists.map((list, index) => (
-  //       <div
-  //         key={list.id} 
-  //       >
-  //         <Droppable
-  //           droppableId={list.id} 
-  //           direction='horizontal'
-  //         >
-  //           {(provided) => (
-  //             <div
-  //               ref={provided.innerRef} 
-  //               {...provided.droppableProps}
-  //             >
-  //               <ListItem
-  //                 list={list}
-  //                 index={index}
-  //               />
-  //               {provided.placeholder}
-  //             </div>
-  //           )}
-
-  //         </Droppable>
-          
-  //       </div> 
-  //     ))}
-  //   </div>
-  // )
 }
 
 export default List

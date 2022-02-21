@@ -1,5 +1,6 @@
 import create from "zustand";
 import { v4 as uuidv4 } from 'uuid'
+import useCard, { Card } from "./useCard";
 
 export interface List {
   id: string
@@ -15,11 +16,12 @@ interface DraggableProps{
 const useList = create<{
   lists: List[],
   createList: (title: string) => void,
+  deleteList: (id: string) => { cardId: string }[]
   addCardToList: (listId: string, cardId: string) => void,
   removeCardFromList: (listId: string, cardId: string) => void,
   moveListPosition: (sourceIndex: number, destinationIndex: number) => void,
   moveCardPosition: (source: DraggableProps, destination: DraggableProps ) => void,
-  renameList: (id: string, newTitle: string) => void
+  renameList: (id: string, newTitle: string) => void,
 }>((set, get) => ({
   lists: [
     {
@@ -70,6 +72,16 @@ const useList = create<{
     set((state) => ({
       ...state
     }))
+  },
+  deleteList: (id: string) => {
+    const list = get().lists.filter((item) => item.id === id)[0]
+    const cards = list.cards
+    
+    set((state) => ({
+      ...state,
+      lists: get().lists.filter((list) => list.id !== id)
+    }))
+    return cards
   },
   removeCardFromList: (listId: string, cardId: string) => {
     const listIndex = findIndexOfList(listId, get().lists)

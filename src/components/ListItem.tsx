@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Draggable, Droppable } from 'react-beautiful-dnd'
+import useCard from '../states/useCard'
 import useList, { List } from '../states/useList'
 import Card from './Card'
 import CardInput from './molecules/CardInput'
@@ -8,7 +9,8 @@ const ListItem = ({ list, index }: { list: List, index: number }) => {
 
   const [editListOpen, setEditListOpen] = useState<boolean>(false)
   const [editInputName, setEditInputName] = useState<string>(list.title)
-  const { renameList } = useList((state) => state)
+  const { renameList, deleteList } = useList((state) => state)
+  const { deleteCardById } = useCard((state) => state)
 
     return (
     <Draggable
@@ -54,15 +56,30 @@ const ListItem = ({ list, index }: { list: List, index: number }) => {
                 />
 
               ) : (
-                <div className="flex justify-between items-center group hover:bg-gray-300 mb-3"
-                  onClick={() => setEditListOpen(true)}
+                <div className="flex justify-between items-center group mb-3"
                 >
-                  <h5
-                    className="font-medium"
-                  >{list.title}</h5>
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 hidden group-hover:block" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-                  </svg>
+                  <div
+                    className="w-full  hover:bg-gray-300"
+                    title="edit title"
+                    onClick={() => setEditListOpen(true)}
+                  >
+                    <h5
+                      className="font-medium"
+                    >{list.title}</h5>
+                  </div>
+                  <button className="text-red-500 hover:text-red-600"
+                    title="delete list"
+                    onClick={() => {
+                      const cards = deleteList(list.id)
+                      cards?.map((card) => {
+                        deleteCardById(card.cardId)
+                      })
+                    }}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
+                    </svg>
+                  </button>
                 </div>
               )}
               
