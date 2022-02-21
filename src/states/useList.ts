@@ -18,7 +18,8 @@ const useList = create<{
   addCardToList: (listId: string, cardId: string) => void,
   removeCardFromList: (listId: string, cardId: string) => void,
   moveListPosition: (sourceIndex: number, destinationIndex: number) => void,
-  moveCardPosition: (source: DraggableProps, destination: DraggableProps ) => void
+  moveCardPosition: (source: DraggableProps, destination: DraggableProps ) => void,
+  renameList: (id: string, newTitle: string) => void
 }>((set, get) => ({
   lists: [
     {
@@ -107,6 +108,13 @@ const useList = create<{
       const card = sourceCards.splice(source.index, 1)[0]
       destinationCards.splice(destination.index, 0, card)
     }
+  },
+  renameList: (id: string, newTitle: string) => {
+    const list = get().lists.filter((listItem) => listItem.id === id)[0]
+    list.title = newTitle
+    set((state) => ({
+      ...state
+    }))
   }
 }))
 
